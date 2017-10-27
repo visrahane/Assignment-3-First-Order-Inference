@@ -10,5 +10,5 @@ package com.vis.constants;
  */
 public class IOConstants {
 
-	public static final String WORD_SPLITTER = "|";
+	public static final String WORD_SPLITTER = "\\|";
 }

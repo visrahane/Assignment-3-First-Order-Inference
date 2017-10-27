@@ -33,10 +33,12 @@ public class DataParserUtil {
 
 		List<List<String>> knowledgeBase = new ArrayList<>();
 		for (int i = 0; i < inputData.getKnowledgeBaseSize(); i++) {
-			String sentence = inputDataList.get(counter++);
+			String sentence = inputDataList.get(counter++).replaceAll(" ", "");
+			sentence.replaceAll(" ", "");
 			String predicates[] = sentence.split(IOConstants.WORD_SPLITTER);
 			knowledgeBase.add(Arrays.asList(predicates));
 		}
+		inputData.setKnowledgeBase(knowledgeBase);
 		return inputData;
 	}
 
