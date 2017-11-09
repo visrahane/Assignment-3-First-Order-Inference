@@ -8,7 +8,7 @@ package com.vis.constants;
  *
  */
 public enum Grammar {
-	NOT("~"), BLANK("");
+	NOT("~"), BLANK(""), OPENING_BRACES("("), CLOSING_BRACES(")"), ARGUMENT_SPLITTER(",");
 	private String symbol;
 
 	private Grammar(String symbol) {
