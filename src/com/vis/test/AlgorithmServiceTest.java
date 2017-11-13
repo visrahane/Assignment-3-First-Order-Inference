@@ -29,11 +29,10 @@ public class AlgorithmServiceTest {
 		Predicate p1 = new Predicate("F", Arrays.asList("Ken", "Jill"));
 		sentence.add(p1);
 
-		List<Predicate> query = new ArrayList<>();
 		Predicate p2 = new Predicate(Grammar.NOT.getSymbol() + "F", Arrays.asList("Joe", "Jill"));
-		query.add(p2);
-
-		Assert.assertNull(algorithmServiceImpl.matchAndResolve(query, sentence));
+		List<Predicate> predicate = new ArrayList<>();
+		predicate.add(p2);
+		Assert.assertNull(algorithmServiceImpl.matchAndResolve(predicate, sentence));
 	}
 
 	@Test
@@ -44,10 +43,26 @@ public class AlgorithmServiceTest {
 		Predicate p1 = new Predicate("F", Arrays.asList("x", "y"));
 		sentence.add(p1);
 
-		List<Predicate> query = new ArrayList<>();
 		Predicate p2 = new Predicate(Grammar.NOT.getSymbol() + "F", Arrays.asList("Joe", "Jill"));
-		query.add(p2);
-
-		Assert.assertEquals(0, algorithmServiceImpl.matchAndResolve(query, sentence).size());
+		List<Predicate> predicates = new ArrayList<>();
+		predicates.add(p2);
+		Assert.assertEquals(0, algorithmServiceImpl.matchAndResolve(predicates, sentence).size());
 	}
+
+	@Test
+	public void testMatchAndResolve_when2Args() {
+		// D(Alice,y) vs ~C(x,y) | ~D(x,Alice) is ~C(Alice, Alice)
+		AlgorithmServiceImpl algorithmServiceImpl = new AlgorithmServiceImpl();
+		List<Predicate> sentence = new ArrayList<>();
+		Predicate p1 = new Predicate("D", Arrays.asList("Alice", "y"));
+		Predicate p2 = new Predicate("C", Arrays.asList("x", "y"));
+		sentence.add(p1);
+		sentence.add(p2);
+
+		Predicate query = new Predicate(Grammar.NOT.getSymbol() + "D", Arrays.asList("x", "Alice"));
+		List<Predicate> predicates = new ArrayList<>();
+		predicates.add(query);
+		Assert.assertEquals("Alice", algorithmServiceImpl.matchAndResolve(predicates, sentence).get(0).getArgs(1));
+	}
+
 }

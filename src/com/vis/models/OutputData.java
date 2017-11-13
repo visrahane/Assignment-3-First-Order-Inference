@@ -3,27 +3,34 @@
  */
 package com.vis.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author vis
  *
  */
 public class OutputData {
 
-	private boolean answer;
+	private List<Boolean> answers;
+
+	public OutputData() {
+		answers = new ArrayList<>(1);
+	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("OutputData [answer=").append(answer).append("]");
+		builder.append("OutputData [answers=").append(answers).append("]");
 		return builder.toString();
 	}
 
-	public boolean isAnswer() {
-		return answer;
+	public List<Boolean> getAnswers() {
+		return answers;
 	}
 
-	public void setAnswer(boolean answer) {
-		this.answer = answer;
+	public void addAnswer(boolean resolve) {
+		answers.add(resolve);
 	}
 
 }

@@ -3,12 +3,13 @@
  */
 package com.vis.starter;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.vis.models.InputData;
 import com.vis.models.OutputData;
 import com.vis.reader.InputReader;
+import com.vis.reader.OutputWriter;
 import com.vis.service.AlgorithmService;
 import com.vis.service.AlgorithmServiceImpl;
 import com.vis.util.DataParserUtil;
@@ -19,21 +20,18 @@ import com.vis.util.DataParserUtil;
  */
 public class Starter {
 
-	public static Map<Integer, Float> calibrationMap;
-
 	public static void main(String[] args) {
-		long curretTime = System.currentTimeMillis();
 		InputData inputData = readInput();
 		OutputData outputData = runAlgorithm(inputData);
-		// displayOutput(outputData);
-		System.out.println(System.currentTimeMillis() - curretTime);
+		displayOutput(outputData);
+		System.out.println(outputData);
 	}
 
-	/*private static void displayOutput(OutputData outputData) {
+	private static void displayOutput(OutputData outputData) {
 		List<String> outputDataList = generateOutput(outputData);
 		OutputWriter outputWriter = new OutputWriter("output.txt");
 		outputWriter.writeFile(outputDataList);
-	}*/
+	}
 
 	public static OutputData runAlgorithm(InputData inputData) {
 		AlgorithmService algorithmService = new AlgorithmServiceImpl();
@@ -41,11 +39,11 @@ public class Starter {
 		return outputData;
 	}
 
-	/*private static List<String> generateOutput(OutputData outputData) {
+	private static List<String> generateOutput(OutputData outputData) {
 		List<String> outputDataList = new ArrayList<>();
-		outputDataList.add();
+		outputData.getAnswers().forEach((answer -> outputDataList.add(answer.toString().toUpperCase())));
 		return outputDataList;
-	}*/
+	}
 
 	private static InputData readInput() {
 		InputReader inputReader = new InputReader("input.txt");
